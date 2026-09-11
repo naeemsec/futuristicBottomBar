@@ -36,14 +36,21 @@ dependencies {
 **In your layout XML:**
 
 ```xml
-<com.naeem.futuristicbottomnav.FuturisticBottomNav
+<com.navbar.futuristicbottomnav.FuturisticBottomNav
     android:id="@+id/bottomNav"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:navBackgroundColor="#12162E"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="20dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
     app:navActiveColor="#5EEAD4"
+    app:navBackgroundColor="#12162E"
+    app:navGlowColor="#5EEAD4"
     app:navInactiveColor="#8B93B8"
-    app:navGlowColor="#5EEAD4" />
+    app:navMenu="@menu/bottom_nav_menu"
+    app:navTheme="auto" />
 ```
 
 **In your Activity/Fragment:**
