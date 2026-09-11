@@ -24,7 +24,7 @@ dependencyResolutionManagement {
 ```
 
 **Step 2.** Add the dependency to your app module's `build.gradle`:
-
+> Check the badge above for the latest version, then use it below:
 ```gradle
 dependencies {
     implementation 'com.github.naeemsec.futuristicBottomBar:futuristicbottomnav:v1.0.0'
@@ -33,30 +33,50 @@ dependencies {
 
 ## Usage
 
-**In your layout XML:**
+Items can be provided two ways — use **one**, not both, since whichever runs later will overwrite the other.
 
+### Option A — XML Menu Resource (recommended, no hardcoding)
+
+`res/menu/bottom_nav_menu.xml`:
+```xml
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_home" android:icon="@drawable/ic_home" android:title="Home" />
+    <item android:id="@+id/nav_new" android:icon="@drawable/ic_new" android:title="New" />
+    <item android:id="@+id/nav_discover" android:icon="@drawable/ic_discover" android:title="Discover" />
+    <item android:id="@+id/nav_explore" android:icon="@drawable/ic_explore" android:title="Explore" />
+</menu>
+```
+
+Layout XML:
 ```xml
 <com.navbar.futuristicbottomnav.FuturisticBottomNav
     android:id="@+id/bottomNav"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginBottom="20dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:navActiveColor="#5EEAD4"
-    app:navBackgroundColor="#12162E"
-    app:navGlowColor="#5EEAD4"
-    app:navInactiveColor="#8B93B8"
     app:navMenu="@menu/bottom_nav_menu"
     app:navTheme="auto" />
 ```
 
-**In your Activity/Fragment:**
+In your Activity/Fragment — items are loaded automatically from the menu, so you only need to attach a listener:
+```.java
+FuturisticBottomNav bottomNav = findViewById(R.id.bottomNav);
+
+bottomNav.setOnItemSelectedListener((index, item) -> {
+    // Handle tab change here — item.getId() gives the menu item's id
+});
+```
+
+### Option B — Programmatically (set items manually in Java)
+
+Use this when items come from another source at runtime (e.g. an API response). In this case, do **not** set `app:navMenu` in your layout XML:
 
 ```.java
 FuturisticBottomNav bottomNav = findViewById(R.id.bottomNav);
+
+Drawable homeIcon = ContextCompat.getDrawable(this, R.drawable.ic_home);
+Drawable newIcon = ContextCompat.getDrawable(this, R.drawable.ic_new);
+Drawable discoverIcon = ContextCompat.getDrawable(this, R.drawable.ic_discover);
+Drawable exploreIcon = ContextCompat.getDrawable(this, R.drawable.ic_explore);
 
 bottomNav.setItems(Arrays.asList(
     new NavItem(homeIcon, "Home"),
@@ -66,12 +86,11 @@ bottomNav.setItems(Arrays.asList(
 ));
 
 bottomNav.setOnItemSelectedListener((index, item) -> {
-    // handle tab change
+    // Handle tab change here
 });
 ```
 
-You can add as many `NavItem`s as you want — the bar automatically
-splits the available width evenly between them.
+Either way, you can add as many items as you want (2, 4, 5, or more) — the bar automatically splits the available width evenly between them.
 
 ## Theming (Light / Dark / Auto)
 
