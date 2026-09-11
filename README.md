@@ -1,4 +1,6 @@
 # Futuristic Bottom Nav
+[![JitPack](https://jitpack.io/v/naeemsec/futuristicBottomBar.svg)](https://jitpack.io/#naeemsec/futuristicBottomBar)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 A self-drawing, animated Bottom Navigation Bar for native Android
 (Java + XML) — with a convex glowing "bump" that slides between tabs.
@@ -25,7 +27,7 @@ dependencyResolutionManagement {
 
 ```gradle
 dependencies {
-    implementation 'com.github.YourGitHubUsername:futuristicbottomnav:v1.0.0'
+    implementation 'com.github.naeemsec.futuristicBottomBar:futuristicbottomnav:v1.0.0'
 }
 ```
 
@@ -64,6 +66,39 @@ bottomNav.setOnItemSelectedListener((index, item) -> {
 You can add as many `NavItem`s as you want — the bar automatically
 splits the available width evenly between them.
 
+## Theming (Light / Dark / Auto)
+
+```.xml
+app:navTheme="auto"   <!-- follows system dark mode -->
+```
+
+Runtime pe switch karne ke liye:
+```.java
+bottomNav.setTheme(FuturisticBottomNav.THEME_LIGHT);
+// THEME_DARK, THEME_LIGHT, THEME_AUTO
+```
+
+Agar `navBackgroundColor` / `navActiveColor` / etc. explicitly XML mein diye hain, to woh theme ke defaults ko override kar dete hain.
+
+## Items via Menu Resource (no hardcoding)
+
+Java code likhne ke bajaye, standard Android `<menu>` resource se bhi items diye ja sakte hain — `BottomNavigationView` ki tarah:
+
+`res/menu/bottom_nav_menu.xml`:
+```xml
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_home" android:icon="@drawable/ic_home" android:title="Home" />
+    <item android:id="@+id/nav_new" android:icon="@drawable/ic_new" android:title="New" />
+    <item android:id="@+id/nav_discover" android:icon="@drawable/ic_discover" android:title="Discover" />
+</menu>
+```
+
+```.xml
+app:navMenu="@menu/bottom_nav_menu"
+```
+
+**Note:** `app:navMenu` aur manual `setItems()` ek sath mat use karo — jo baad mein call hoga wo dusre ko overwrite kar dega.
+
 ## Customization
 
 | Attribute            | Description                          |
@@ -72,6 +107,10 @@ splits the available width evenly between them.
 | `navActiveColor`      | Color of the sliding bump (selected) |
 | `navInactiveColor`    | Icon/text color when not selected    |
 | `navGlowColor`        | Color of the neon glow behind the bump |
+| `navGlowIntensity`    | 0.0–1.0, glow ka spread/brightness   |
+| `navGlowEnabled`      | true/false, glow on/off              |
+| `navTheme`            | `dark` / `light` / `auto` — color palette |
+| `navMenu`             | `@menu/xxx` — XML menu resource se items load karo |
 
 Colors can also be set at runtime:
 
