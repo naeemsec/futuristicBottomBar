@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FuturisticBottomNav">
+        <attr name="navBackgroundColor" format="color" />
+        <attr name="navActiveColor" format="color" />
+        <attr name="navInactiveColor" format="color" />
+        <attr name="navGlowColor" format="color" />
+        <attr name="navGlowIntensity" format="float" />
+        <attr name="navGlowEnabled" format="boolean" />
+
+        <attr name="navTheme" format="enum">
+            <enum name="dark" value="0" />
+            <enum name="light" value="1" />
+            <enum name="auto" value="2" />
+        </attr>
+        <attr name="navMenu" format="reference" />
+
+    </declare-styleable>
+</resources>
